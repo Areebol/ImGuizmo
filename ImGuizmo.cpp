@@ -849,7 +849,7 @@ namespace ImGuizmo
    void SetDrawlist(ImDrawList* drawlist)
    {
       gContext.mDrawList = drawlist ? drawlist : ImGui::GetWindowDrawList();
-}
+   }
 
    void BeginFrame()
    {
@@ -890,9 +890,9 @@ namespace ImGuizmo
 
    bool IsOver(OPERATION op) {
       switch (op) {
-      case SCALE:       return GetScaleType()      != NONE || IsUsing();
-      case ROTATE:      return GetRotateType()     != NONE || IsUsing();
-      case TRANSLATE:   return GetMoveType(NULL)   != NONE || IsUsing();
+      case SCALE:       return GetScaleType() != NONE || IsUsing();
+      case ROTATE:      return GetRotateType() != NONE || IsUsing();
+      case TRANSLATE:   return GetMoveType(NULL) != NONE || IsUsing();
       }
       return false;
    }
@@ -1197,8 +1197,8 @@ namespace ImGuizmo
          scaleDisplay = gContext.mScale;
       }
 
-	  constexpr float lineThickness = 6.0f;
-	  constexpr float circleSize = 12.0f;
+      constexpr float lineThickness = 6.0f;
+      constexpr float circleSize = 12.0f;
       for (unsigned int i = 0; i < 3; i++)
       {
          vec_t dirPlaneX, dirPlaneY, dirAxis;
@@ -1221,8 +1221,8 @@ namespace ImGuizmo
             drawList->AddLine(baseSSpace, worldDirSSpace, colors[i + 1], lineThickness);
             drawList->AddCircleFilled(worldDirSSpace, circleSize, colors[i + 1]);
 
-			// if (gContext.mAxisFactor[i] < 0.f)
-			//    DrawHatchedAxis(dirAxis * scaleDisplay[i]);
+            // if (gContext.mAxisFactor[i] < 0.f)
+            //    DrawHatchedAxis(dirAxis * scaleDisplay[i]);
          }
       }
 
@@ -1464,10 +1464,10 @@ namespace ImGuizmo
 
             switch (operation)
             {
-               case TRANSLATE: type = GetMoveType(&gizmoHitProportion); break;
-               case ROTATE: type = GetRotateType(); break;
-               case SCALE: type = GetScaleType(); break;
-               case BOUNDS: break;
+            case TRANSLATE: type = GetMoveType(&gizmoHitProportion); break;
+            case ROTATE: type = GetRotateType(); break;
+            case SCALE: type = GetScaleType(); break;
+            case BOUNDS: break;
             }
             if (type != NONE)
             {
@@ -1781,9 +1781,9 @@ namespace ImGuizmo
 
          }
 
-         if(delta != gContext.mTranslationLastDelta)
+         if (delta != gContext.mTranslationLastDelta)
          {
-             modified = true;
+            modified = true;
          }
          gContext.mTranslationLastDelta = delta;
 
@@ -1912,9 +1912,9 @@ namespace ImGuizmo
          for (int i = 0; i < 3; i++)
             gContext.mScale[i] = max(gContext.mScale[i], 0.001f);
 
-         if(gContext.mScaleLast != gContext.mScale)
+         if (gContext.mScaleLast != gContext.mScale)
          {
-             modified = true;
+            modified = true;
          }
          gContext.mScaleLast = gContext.mScale;
 
@@ -1999,9 +1999,9 @@ namespace ImGuizmo
 
          matrix_t deltaRotation;
          deltaRotation.RotationAxis(rotationAxisLocalSpace, gContext.mRotationAngle - gContext.mRotationAngleOrigin);
-         if(gContext.mRotationAngle != gContext.mRotationAngleOrigin)
+         if (gContext.mRotationAngle != gContext.mRotationAngleOrigin)
          {
-             modified = true;
+            modified = true;
          }
          gContext.mRotationAngleOrigin = gContext.mRotationAngle;
 
@@ -2160,7 +2160,7 @@ namespace ImGuizmo
 
    void SetGizmoSizeClipSpace(float value)
    {
-       gGizmoSizeClipSpace = value;
+      gGizmoSizeClipSpace = value;
    }
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2206,7 +2206,7 @@ namespace ImGuizmo
    {
       matrix_t viewInverse;
       viewInverse.Inverse(*(matrix_t*)view);
-      
+
       struct CubeFace
       {
          float z;
@@ -2292,19 +2292,19 @@ namespace ImGuizmo
                cubeFace.faceCoordsScreen[iCoord] = worldToPos(faceCoords[iCoord] * 0.5f * invert, res);
             }
             cubeFace.color = directionColor[normalIndex] | 0x808080;
-            
+
             cubeFace.z = centerPositionVP.z / centerPositionVP.w;
             cubeFaceCount++;
          }
       }
-      qsort(faces, cubeFaceCount, sizeof(CubeFace), [](void const* _a, void const* _b){
-            CubeFace* a = (CubeFace*)_a;
-            CubeFace* b = (CubeFace*)_b;
-            if (a->z < b->z)
-            {
-               return 1;
-            }
-            return -1;
+      qsort(faces, cubeFaceCount, sizeof(CubeFace), [](void const* _a, void const* _b) {
+         CubeFace* a = (CubeFace*)_a;
+         CubeFace* b = (CubeFace*)_b;
+         if (a->z < b->z)
+         {
+            return 1;
+         }
+         return -1;
          });
       // draw face with lighter color
       for (int iFace = 0; iFace < cubeFaceCount; iFace++)
@@ -2320,7 +2320,7 @@ namespace ImGuizmo
       vec_t frustum[6];
       ComputeFrustumPlanes(frustum, viewProjection.m16);
       matrix_t res = *(matrix_t*)matrix * viewProjection;
-         
+
       for (float f = -gridSize; f <= gridSize; f += 1.f)
       {
          for (int dir = 0; dir < 2; dir++)
@@ -2481,7 +2481,7 @@ namespace ImGuizmo
                }
 
                const ImVec2 panelCorners[2] = { panelPosition[iPanel], panelPosition[iPanel] + panelSize[iPanel] };
-               bool insidePanel = localx > panelCorners[0].x&& localx < panelCorners[1].x && localy > panelCorners[0].y&& localy < panelCorners[1].y;
+               bool insidePanel = localx > panelCorners[0].x && localx < panelCorners[1].x && localy > panelCorners[0].y && localy < panelCorners[1].y;
                int boxCoordInt = int(boxCoord.x * 9.f + boxCoord.y * 3.f + boxCoord.z);
                assert(boxCoordInt < 27);
                boxes[boxCoordInt] |= insidePanel && (!isDraging);
@@ -2593,4 +2593,3 @@ namespace ImGuizmo
       ComputeContext(svgView.m16, svgProjection.m16, gContext.mModelSource.m16, gContext.mMode);
    }
 };
-
